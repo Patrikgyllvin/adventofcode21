@@ -5,7 +5,7 @@
 
 #include "lib.hpp"
 
-unsigned long long simulate( std::deque< unsigned long long >& fish, int days )
+unsigned long long run( std::deque< unsigned long long >& fish, int days )
 {
     for( int day = 0; day != days; ++day )
     {
@@ -35,11 +35,11 @@ auto parse( const std::string& input )
 unsigned long long partOne( const std::string& input )
 {
 	std::deque< unsigned long long > fish = parse( input );
-	return simulate( fish, 80 );
+	return run( fish, 80 );
 }
 
 unsigned long long partTwo( const std::string& input )
 {
 	std::deque< unsigned long long > fish = parse( input );
-    return simulate( fish, 256 );
+    return run( fish, 256 );
 }
