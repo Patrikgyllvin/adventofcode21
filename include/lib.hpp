@@ -20,7 +20,7 @@ std::vector< T > getNumbers( const std::string &str, const char& delim )
 	T value = 0;
 	bool gotValue = false, neg = false;
 
-	for( int i = 0; i != str.length(); ++i )
+	for( std::size_t i = 0; i != str.length(); ++i )
 	{
 		char c = str[ i ];
 		if( c == delim || c == '\n')
