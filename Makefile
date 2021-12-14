@@ -6,7 +6,7 @@ OBJDIR = $(RTDIR)/obj
 
 CXX = g++
 
-CXXFLAGS = --std=c++17 -Wall -O3 -I$(INCDIR)
+CXXFLAGS = -Wno-sign-compare --std=c++17 -Wall -O3 -I$(INCDIR)
 LDFLAGS =
 
 SOURCES := $(wildcard $(SRCDIR)/*.cpp) $(wildcard $(SRCDIR)/**/*.cpp)
