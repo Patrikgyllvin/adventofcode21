@@ -21,7 +21,7 @@ auto parse( const std::string& input, std::deque< std::unordered_set< int > >& e
             continue;
         }
 
-        energies[ input[ i ] - '0' ].emplace( i - h );
+        energies[ input[ i ] - '0' ].insert( i - h );
     }
     
     return std::make_pair( w, h );
@@ -29,7 +29,7 @@ auto parse( const std::string& input, std::deque< std::unordered_set< int > >& e
 
 void incrementAll( std::deque< std::unordered_set< int > >& energies )
 {
-    energies.emplace_front( std::move( energies.back() ) );
+    energies.push_front( std::move( energies.back() ) );
     energies.pop_back();
 }
 
@@ -38,15 +38,15 @@ std::unordered_set< int > getNeighbors( int i, int w, int h )
     int x = i % w, y = i / w;
     std::unordered_set< int > indices;
 
-    if( x != 0 && y != 0 ) indices.emplace( i - 1 - w );
-    if( x != w - 1 && y != 0 ) indices.emplace( i + 1 - w );
-    if( x != 0 && y != h - 1 ) indices.emplace( i - 1 + w );
-    if( x != w - 1 && y != h - 1 ) indices.emplace( i + 1 + w );
+    if( x != 0 && y != 0 ) indices.insert( i - 1 - w );
+    if( x != w - 1 && y != 0 ) indices.insert( i + 1 - w );
+    if( x != 0 && y != h - 1 ) indices.insert( i - 1 + w );
+    if( x != w - 1 && y != h - 1 ) indices.insert( i + 1 + w );
 
-    if( x != 0 ) indices.emplace( i - 1 );
-    if( x != w - 1 ) indices.emplace( i + 1 );
-    if( y != 0 ) indices.emplace( i - w );
-    if( y != h - 1 ) indices.emplace( i + w );
+    if( x != 0 ) indices.insert( i - 1 );
+    if( x != w - 1 ) indices.insert( i + 1 );
+    if( y != 0 ) indices.insert( i - w );
+    if( y != h - 1 ) indices.insert( i + w );
     
     return indices;
 }
@@ -63,7 +63,7 @@ void handleFlashing(
     std::unordered_set< int > willFlash;
     
     for( auto i : flashing )
-        flashed.emplace( i );
+        flashed.insert( i );
     
     for( auto i : flashing )
     {
@@ -87,12 +87,12 @@ void handleFlashing(
                     energies[ j ].erase( *it );
                     
                     int newEnergy = ( j + 1 ) % 10;
-                    energies[ newEnergy ].emplace( *it );
+                    energies[ newEnergy ].insert( *it );
 
                     if( newEnergy == 0 )
                     {
-                        willFlash.emplace( *it );
-                        flashed.emplace( *it );
+                        willFlash.insert( *it );
+                        flashed.insert( *it );
                     }
             
                     it = neighbors.erase( it );

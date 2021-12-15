@@ -41,19 +41,19 @@ auto parse( const std::string& input,
         std::vector< std::string > tmp;
         while( ( pos = part1.find( ' ' ) ) != std::string::npos )
         {
-            tmp.emplace_back( part1.substr( 0, pos ) );
+            tmp.emplace_back( part1, 0, pos );
             part1.erase( 0, pos + 1 );
         }
-        digitsVec.emplace_back( std::move( tmp ) );
+        digitsVec.push_back( std::move( tmp ) );
 
         std::vector< std::string > tmp1;
         while( ( pos = part2.find_first_of( " \n" ) ) != std::string::npos )
         {
-            tmp1.emplace_back( part2.substr( 0, pos ) );
+            tmp1.emplace_back( part2, 0, pos );
             part2.erase( 0, pos + 1 );
         }
-        tmp1.emplace_back( part2.substr( 0 ) );
-        outputsVec.emplace_back( std::move( tmp1 ) );
+        tmp1.emplace_back( part2, 0 );
+        outputsVec.push_back( std::move( tmp1 ) );
     }
 }
 
@@ -90,7 +90,7 @@ std::vector< char > findMapping( std::vector< std::string >& digits )
                     mapping[ digitIndices[ i ] ] = pattern[ i ];
                 }
                 
-                nextMappings.emplace_back( std::move( mapping ) );
+                nextMappings.push_back( std::move( mapping ) );
             }
             else
             {
@@ -110,12 +110,12 @@ std::vector< char > findMapping( std::vector< std::string >& digits )
                     }
 
                     if( ok )
-                        nextMappings.emplace_back( std::move( mapping ) );
+                        nextMappings.push_back( std::move( mapping ) );
                 }
             }
         } while( std::next_permutation( digitIndices.begin(), digitIndices.end() ) );
         
-        mappings = std::vector( std::move( nextMappings ) );
+        mappings = std::move( nextMappings );
     }
     
     for( const std::vector< char >& mapping : mappings )

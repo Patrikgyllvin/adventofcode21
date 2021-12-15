@@ -50,7 +50,7 @@ unsigned long long partTwo( const std::string& input )
 
     while( std::getline( inputStream, line ) )
     {
-        nums.emplace( std::stoi( line, nullptr, 2 ) );
+        nums.insert( std::stoi( line, nullptr, 2 ) );
     }
     
     int numBits = line.size();

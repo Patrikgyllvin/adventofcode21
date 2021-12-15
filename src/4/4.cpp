@@ -43,11 +43,11 @@ auto parse( const std::string& input )
             {
                 int num;
                 inputStream >> num;
-                board.emplace_back( Cell{ .num = num, .marked = false } );
+                board.emplace_back( num, false );
             }
         }
         
-        boards.emplace_back( std::move( board ) );
+        boards.push_back( std::move( board ) );
     }
     
     return std::make_pair( nums, boards );

@@ -85,7 +85,7 @@ void findLowPoint(
         return;
     }
 
-    path.emplace( curr );
+    path.insert( curr );
     
     int next = findFlowNext( board, w, h, curr );
     

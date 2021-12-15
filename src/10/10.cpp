@@ -15,7 +15,7 @@ auto parse( const std::string& input )
     
     std::string line;
     while( std::getline( stream, line ) )
-        lines.emplace_back( line );
+        lines.push_back( line );
 
     return lines;
 }
@@ -33,7 +33,7 @@ unsigned long long checkScore( const std::vector< std::string >& lines, bool con
             const char& c = lines[ i ][ j ];
 
             if( c == '(' || c == '[' || c == '{' || c == '<' )
-                stack.emplace( lines[ i ][ j ] );
+                stack.push( lines[ i ][ j ] );
             else
             {
                 const char& top = stack.top();
@@ -50,7 +50,7 @@ unsigned long long checkScore( const std::vector< std::string >& lines, bool con
                     else if( c == '>' )
                         score += 25137;
                     
-                    stack.emplace( 'X' );
+                    stack.push( 'X' );
                     
                     break;
                 }
@@ -77,7 +77,7 @@ unsigned long long checkScore( const std::vector< std::string >& lines, bool con
                         incompleteScore = incompleteScore * 5 + 4;
                 }
                 
-                scores.emplace_back( incompleteScore );
+                scores.push_back( incompleteScore );
             }
         }
     }

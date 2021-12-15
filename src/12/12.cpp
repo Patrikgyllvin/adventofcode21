@@ -27,8 +27,8 @@ auto parse( const std::string& input )
         std::string node1 = line.substr( 0, pos ),
                     node2 = line.substr( pos + 1 );
         
-        graph[ node1 ].emplace( node2 );
-        graph[ node2 ].emplace( node1 );
+        graph[ node1 ].emplace( line, 0, pos, node2 );
+        graph[ node2 ].emplace( line, pos + 1 );
     }
     
     return graph;
@@ -81,19 +81,19 @@ void findPaths(
         if( current == "end" )
         {
             std::deque< std::string > path;
-            path.emplace_front( current );
+            path.push_front( current );
 
             for( std::string node = prev[ current ].back(); node != start; )
             {
-                path.emplace_front( node );
+                path.push_front( node );
 
                 std::string tmp = prev[ node ].back();
                 prev[ node ].pop_back();
                 node = tmp;
             }
 
-            path.emplace_front( start );
-            paths.emplace( std::move( path ) );
+            path.push_front( start );
+            paths.insert( std::move( path ) );
 
             continue;
         }
@@ -101,12 +101,12 @@ void findPaths(
         if( !isLower( current ) || !visited.count( current ) || ( current == mayRepeat && visited.count( current ) < 2 ) )
         {
             if( isLower( current ) )
-                visited.emplace( current );
+                visited.insert( current );
             
             for( const auto& node : graph[ current ] )
             {
                 std::unordered_map< std::string, std::deque< std::string > > prevCopy{ prev };
-                prevCopy[ node ].emplace_back( current );
+                prevCopy[ node ].push_back( current );
 
                 stack.push( std::make_tuple( node, std::unordered_multiset< std::string >{ visited }, prevCopy ) );
             }

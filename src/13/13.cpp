@@ -40,7 +40,7 @@ auto parse( const std::string& input, std::unordered_set< Point >& dots, std::ve
     while( std::getline( sstream, line ) )
     {
         std::vector< int > nums = getNumbers< int >( line, ',' );
-        dots.emplace( Point{ .x = nums[ 0 ], .y = nums[ 1 ] } );
+        dots.emplace( nums[ 0 ], nums[ 1 ] );
     }
     
     sstream = std::stringstream{ input.substr( lineBreak + 2 ) };
@@ -49,7 +49,7 @@ auto parse( const std::string& input, std::unordered_set< Point >& dots, std::ve
         std::size_t pos = line.find_last_of( ' ' );
         int fold = std::stoi( line.substr( pos + 3 ) );
 
-        instructions.emplace_back( std::make_pair( line[ pos + 1 ], fold ) );
+        instructions.emplace_back( line[ pos + 1 ], fold );
         if( line[ pos + 1 ] == 'x' ) finalSize = std::make_pair( fold * 2, std::get< 1 >( finalSize ) );
         else if( line[ pos + 1 ] == 'y' ) finalSize = std::make_pair( std::get< 0 >( finalSize ), fold * 2 );
     }
@@ -66,13 +66,13 @@ void fold( std::unordered_set< Point >& dots, const std::pair< char, int >& inst
         {
             int newX = instrVal - ( it->x - instrVal ), newY = it->y;
             it = dots.erase( it );
-            dots.emplace( Point{ .x = newX, .y = newY } );
+            dots.emplace( newX, newY );
         }
         else if( std::get< 0 >( instruction ) == 'y' && it->y > ( instrVal = std::get< 1 >( instruction ) ) )
         {
             int newX = it->x, newY = instrVal - ( it->y - instrVal );
             it = dots.erase( it );
-            dots.emplace( Point{ .x = newX, .y = newY } );
+            dots.emplace( newX, newY );
         }
         else
         {

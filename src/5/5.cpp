@@ -53,12 +53,12 @@ int run( const std::vector< Line >& lines )
                 if( overlapping.find( p ) == overlapping.end() )
                 {
                     overlaps++;
-                    overlapping.emplace( std::move( p ) );
+                    overlapping.insert( std::move( p ) );
                 }
             }
             else
             {
-                taken.emplace( std::move( p ) );
+                taken.insert( std::move( p ) );
             }
 
             if( l.p1.x == l.p2.x )
@@ -112,7 +112,7 @@ auto parse( const std::string& input, bool part2 )
             .p2 = Point{ .x = std::stoi( line.substr( point2, comma2 - point2 ) ),
                     .y = std::stoi( line.substr( comma2 + 1 ) ) } };
         if( part2 || ( l.p1.x == l.p2.x || l.p1.y == l.p2.y ) )
-            lines.emplace_back( std::move( l ) );
+            lines.push_back( std::move( l ) );
     }
     
     return lines;
