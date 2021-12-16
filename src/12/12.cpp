@@ -27,8 +27,8 @@ auto parse( const std::string& input )
         std::string node1 = line.substr( 0, pos ),
                     node2 = line.substr( pos + 1 );
         
-        graph[ node1 ].emplace( line, 0, pos, node2 );
-        graph[ node2 ].emplace( line, pos + 1 );
+        graph[ node1 ].insert( node2 );
+        graph[ node2 ].insert( node1 );
     }
     
     return graph;

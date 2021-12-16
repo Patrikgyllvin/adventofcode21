@@ -43,7 +43,7 @@ auto parse( const std::string& input )
             {
                 int num;
                 inputStream >> num;
-                board.emplace_back( num, false );
+                board.push_back( { num, false } );
             }
         }
         

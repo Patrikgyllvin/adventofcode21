@@ -40,7 +40,7 @@ auto parse( const std::string& input, std::unordered_set< Point >& dots, std::ve
     while( std::getline( sstream, line ) )
     {
         std::vector< int > nums = getNumbers< int >( line, ',' );
-        dots.emplace( nums[ 0 ], nums[ 1 ] );
+        dots.insert( { nums[ 0 ], nums[ 1 ] } );
     }
     
     sstream = std::stringstream{ input.substr( lineBreak + 2 ) };
@@ -66,13 +66,13 @@ void fold( std::unordered_set< Point >& dots, const std::pair< char, int >& inst
         {
             int newX = instrVal - ( it->x - instrVal ), newY = it->y;
             it = dots.erase( it );
-            dots.emplace( newX, newY );
+            dots.insert( { newX, newY } );
         }
         else if( std::get< 0 >( instruction ) == 'y' && it->y > ( instrVal = std::get< 1 >( instruction ) ) )
         {
             int newX = it->x, newY = instrVal - ( it->y - instrVal );
             it = dots.erase( it );
-            dots.emplace( newX, newY );
+            dots.insert( { newX, newY } );
         }
         else
         {
@@ -87,7 +87,7 @@ void printDots( const std::unordered_set< Point >& dots, const std::pair< int, i
     {
         for( int j = 0; j != std::get< 0 >( size ); ++j )
         {
-            if( dots.count( Point{ .x = j, .y = i } ) )
+            if( dots.count( Point{ j, i } ) )
                 std::cout << '#';
             else
                 std::cout << '.';
