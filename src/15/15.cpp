@@ -31,7 +31,7 @@ auto tileParse( const std::string& input, int num, int& w, int& h )
     std::string tmp, full;
     
     for( int i = 0; i != num; ++i )
-        tmp += input;
+        tmp += ( input + '\n' );
     
     std::string line;
     std::stringstream sstream{ tmp };
@@ -40,18 +40,18 @@ auto tileParse( const std::string& input, int num, int& w, int& h )
     {
         for( int i = 0; i != num; ++i )
         {
+            std::string incremented;
             for( std::size_t j = 0; j != line.size(); ++j )
             {
-                int val = ( ( line[ j ] - '0' ) + i + inc ) % 10;
-                line[ j ] = val == 0 ? 1 + '0' : val + '0';
+                int val = ( line[ j ] - '0' ) + i + inc / 100;
+                while( val >= 10 ) val -= 9;
+                incremented.push_back( val + '0' );
             }
-            full += line;
+            full += incremented;
         }
         full += '\n';
         inc++;
     }
-    
-    std::cout << full;
 
     return parse( full, w, h );
 }
@@ -67,7 +67,7 @@ std::vector< int > getDirections( int curr, int w, int h )
         dirs.push_back( curr - 1 );
     if( y != h - 1 )
         dirs.push_back( curr + w );
-    if( x != 0 )
+    if( y != 0 )
         dirs.push_back( curr - w );
     
     return dirs;
