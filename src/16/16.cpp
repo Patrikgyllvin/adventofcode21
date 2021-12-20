@@ -52,6 +52,7 @@ struct PacketHeader
 
 struct Packet
 {
+    virtual ~Packet() = default;
     PacketHeader header;
 };
 
